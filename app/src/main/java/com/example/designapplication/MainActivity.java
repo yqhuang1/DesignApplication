@@ -1,8 +1,14 @@
 package com.example.designapplication;
 
 import android.os.Bundle;
+import android.support.design.internal.BottomNavigationMenuView;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -15,12 +21,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
+
+    private ViewPager viewPager;
+    private BottomNavigationView bottomNavigationView;
+    private MenuItem menuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -38,6 +50,17 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
+        viewPager.addOnPageChangeListener(this);
+        bottomNavigationView.setSelectedItemId(R.id.bottom_tab_one);
+        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
+
+
     }
 
     @Override
@@ -76,24 +99,70 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
+        int itemId = item.getItemId();
 
-        if (id == R.id.nav_home) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_tools) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        switch (itemId) {
+            case R.id.drawer_nav_home:
+                break;
+            case R.id.drawer_nav_gallery:
+                break;
+            case R.id.drawer_nav_slideshow:
+                break;
+            case R.id.drawer_nav_tools:
+                break;
+            case R.id.drawer_nav_share:
+                break;
+            case R.id.drawer_nav_send:
+                break;
+            case R.id.bottom_tab_one:
+                viewPager.setCurrentItem(0);
+                break;
+            case R.id.bottom_tab_two:
+                viewPager.setCurrentItem(1);
+                break;
+            case R.id.bottom_tab_three:
+                viewPager.setCurrentItem(2);
+                break;
+            case R.id.bottom_tab_four:
+                viewPager.setCurrentItem(3);
+                break;
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        menuItem = bottomNavigationView.getMenu().getItem(position);
+        menuItem.setChecked(true);
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+
+    class ViewPagerAdapter extends FragmentStatePagerAdapter{
+
+        public ViewPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int i) {
+            return null;
+        }
+
+        @Override
+        public int getCount() {
+            return bottomNavigationView.getChildCount();
+        }
     }
 }

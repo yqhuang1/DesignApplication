@@ -35,8 +35,10 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@android:color/white"
+            android:tooltipText="@string/app_name"
             app:itemIconTint="@drawable/selector_tab_color"
             app:itemTextColor="@drawable/selector_tab_color"
+            app:labelVisibilityMode="labeled"
             app:menu="@menu/bottom_navigation_tab">
 
         </android.support.design.widget.BottomNavigationView>

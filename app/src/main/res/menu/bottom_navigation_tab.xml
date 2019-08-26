@@ -2,22 +2,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/tab_one"
-        android:icon="@drawable/bottom_home_bg_select"
-        android:title="首页"/>
+        android:id="@+id/bottom_tab_one"
+        android:icon="@drawable/bottom_home_bg_nomal"
+        android:title="@string/bottom_navigation_home" />
 
     <item
-        android:id="@+id/tab_two"
-        android:icon="@drawable/bottom_discover_bg_select"
-        android:title="发现"/>
+        android:id="@+id/bottom_tab_two"
+        android:icon="@drawable/bottom_discover_bg_nomal"
+        android:title="@string/bottom_navigation_discover" />
 
     <item
-        android:id="@+id/tab_three"
-        android:icon="@drawable/bottom_gift_bg_select"
-        android:title="礼物"/>
+        android:id="@+id/bottom_tab_three"
+        android:icon="@drawable/bottom_gift_bg_nomal"
+        android:title="@string/bottom_navigation_gift" />
 
     <item
-        android:id="@+id/tab_four"
-        android:icon="@drawable/bottom_activity_bg_select"
-        android:title="活动"/>
+        android:id="@+id/bottom_tab_four"
+        android:icon="@drawable/bottom_activity_bg_nomal"
+        android:title="@string/bottom_navigation_activity" />
 </menu>
