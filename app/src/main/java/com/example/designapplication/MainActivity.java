@@ -20,10 +20,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
 
     private ViewPager viewPager;
+    private List<Fragment> fragmentList;
     private BottomNavigationView bottomNavigationView;
     private MenuItem menuItem;
 
@@ -52,14 +56,24 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        initViewPager();
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
-
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
-        viewPager.addOnPageChangeListener(this);
         bottomNavigationView.setSelectedItemId(R.id.bottom_tab_one);
-        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
 
+
+    }
+
+    private void initViewPager() {
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        fragmentList = new ArrayList<>();
+        fragmentList.add(PagerFragment.newInstance("首页", "1"));
+        fragmentList.add(PagerFragment.newInstance("发现", "2"));
+        fragmentList.add(PagerFragment.newInstance("礼物", "3"));
+        fragmentList.add(PagerFragment.newInstance("活动", "4"));
+
+        viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager(), fragmentList));
+        viewPager.addOnPageChangeListener(this);
 
     }
 
@@ -99,6 +113,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+        menuItem = item;
         int itemId = item.getItemId();
 
         switch (itemId) {
@@ -140,6 +155,11 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onPageSelected(int position) {
+        if (menuItem != null) {
+            menuItem.setChecked(false);
+        } else {
+            bottomNavigationView.getMenu().getItem(0).setChecked(false);
+        }
         menuItem = bottomNavigationView.getMenu().getItem(position);
         menuItem.setChecked(true);
     }
@@ -149,20 +169,4 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    class ViewPagerAdapter extends FragmentStatePagerAdapter{
-
-        public ViewPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int i) {
-            return null;
-        }
-
-        @Override
-        public int getCount() {
-            return bottomNavigationView.getChildCount();
-        }
-    }
 }
